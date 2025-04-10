@@ -9,13 +9,18 @@
             InitializeComponent();
         }
 
+        private void TemValidadeSwitch_Toggled(object sender, ToggledEventArgs e)
+        {
+            validadeStack.IsVisible = e.Value;
+        }
+
         private void AdicionarProduto_Clicked(object sender, EventArgs e)
         {
             string nome = nomeEntry.Text;
             string precoTexto = precoEntry.Text;
             string descricao = descricaoEntry.Text;
             string categoria = categoriaEntry.Text;
-            DateTime? validade = validadePicker.Date;
+            DateTime? validade = temValidadeSwitch.IsToggled ? validadePicker.Date : null;
 
             if (!string.IsNullOrWhiteSpace(nome) &&
                 !string.IsNullOrWhiteSpace(precoTexto) &&
@@ -37,6 +42,7 @@
                 descricaoEntry.Text = string.Empty;
                 categoriaEntry.Text = string.Empty;
                 validadePicker.Date = DateTime.Today;
+                temValidadeSwitch.IsToggled = false;
             }
             else
             {
@@ -49,6 +55,7 @@
             await Navigation.PushAsync(new ListaProdutosPage());
         }
     }
+
     public class Produto
     {
         public string Nome { get; set; }
